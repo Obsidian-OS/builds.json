@@ -43,27 +43,31 @@ fi
 builds="$(curl -s $builds)"
 echo -e "\033[0;38;2;0;111;222;49m"
 # Step 2: Show builds table
-options=$(echo "$builds" | jq 'length')
-echo "There are $options options:"
-printf "%-3s %-15s %s\n" "ID" "Edition" "Description"
-echo "-----------------------------------------------"
-for i in $(seq 0 $((options - 1))); do
-    name=$(echo "$builds" | jq -r ".[$i].name")
-    desc=$(echo "$builds" | jq -r ".[$i].info")
-    curl -s $(echo "$builds" | jq -r ".[$i].icon_url") | kitten icat --align=left --use-window-size=10,10,50,50
-    printf "%-3s %-15s %s\n" "$i:" "$name" "$desc"
-done
+if [ -z "$1" ]; then
+    options=$(echo "$builds" | jq 'length')
+    echo "There are $options options:"
+    printf "%-3s %-15s %s\n" "ID" "Edition" "Description"
+    echo "-----------------------------------------------"
+    for i in $(seq 0 $((options - 1))); do
+        name=$(echo "$builds" | jq -r ".[$i].name")
+        desc=$(echo "$builds" | jq -r ".[$i].info")
+        curl -s $(echo "$builds" | jq -r ".[$i].icon_url") | kitten icat --align=left --use-window-size=10,10,50,50
+        printf "%-3s %-15s %s\n" "$i:" "$name" "$desc"
+    done
 
-# Step 3: Prompt user to select a build
-while true; do
-    read -rp "Choose an option (0-$((options - 1))): " choice
-    if [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 0 && choice < options )); then
-        echo "$(echo "$builds" | jq -r ".[$choice].name") selected."
-        break
-    else
-        echo "Invalid choice. Enter a number between 0 and $((options - 1))."
-    fi
-done
+    # Step 3: Prompt user to select a build
+    while true; do
+        read -rp "Choose an option (0-$((options - 1))): " choice
+        if [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 0 && choice < options )); then
+            echo "$(echo "$builds" | jq -r ".[$choice].name") selected."
+            break
+        else
+            echo "Invalid choice. Enter a number between 0 and $((options - 1))."
+        fi
+    done
+else
+    choice="$1"
+fi
 echo -e "\033[0;39;48;2;150;50;50m"
 # Step 4: Download
 oldpwd="$(pwd)"
