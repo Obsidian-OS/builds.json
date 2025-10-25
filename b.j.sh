@@ -61,6 +61,9 @@ if [ -z "$1" ]; then
         if [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 0 && choice < options )); then
             echo "$(echo "$builds" | jq -r ".[$choice].name") selected."
             break
+        elif [[ "$choice" = "a" ]]; then
+            echo "Downloading ALL ISOS..."
+            break
         else
             echo "Invalid choice. Enter a number between 0 and $((options - 1))."
         fi
