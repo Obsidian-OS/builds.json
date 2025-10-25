@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -eo pipefail
 echo -e "\033[0;38;2;0;255;155;49m\r"
 cat<<EOF
 b.j - builds.json auto-downloader
@@ -67,6 +67,14 @@ if [ -z "$1" ]; then
     done
 else
     choice="$1"
+fi
+if [ $choice == a ]; then
+    echo "recursivily executing myself..."
+    options=$(echo "$builds" | jq 'length')
+    for i in $(seq 0 $((options - 1))); do
+        $0 $i >/dev/null
+    done
+    exit
 fi
 echo -e "\033[0;39;48;2;150;50;50m"
 # Step 4: Download
