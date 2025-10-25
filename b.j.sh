@@ -72,6 +72,10 @@ if [ $choice == a ]; then
     echo "recursivily executing myself..."
     options=$(echo "$builds" | jq 'length')
     for i in $(seq 0 $((options - 1))); do
+        name=$(echo "$builds" | jq -r ".[$i].name")
+        desc=$(echo "$builds" | jq -r ".[$i].info")
+        curl -s $(echo "$builds" | jq -r ".[$i].icon_url") | kitten icat --align=left --use-window-size=10,10,50,50
+        printf "%-3s %-15s %s\n" "$i:" "$name" "$desc"
         $0 $i >/dev/null
     done
     exit
