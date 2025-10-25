@@ -91,8 +91,7 @@ if [ $usegpg != "yes" ]; then
 else
     curl $iso_url > bdotj.iso
     echo "ISO downloaded"
-    curl $gpg_url > bdotj.iso.gpg
-    echo "GPG signature downloaded, checking..."
+    curl $gpg_url > bdotj.iso.gpg 2>/dev/null
     gpg --verify bdotj.iso.gpg bdotj.iso
     mv bdotj.iso $oldpwd/bdj-${distributerName}-$(basename $iso_url)
     echo "Moved ISO to target destination"
