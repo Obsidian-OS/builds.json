@@ -3,5 +3,5 @@
 tmp=$(mktemp)
 curl -s https://bdj.obsidianos.xyz/b.j.sh > $tmp
 chmod a+x $tmp
-exec $tmp
+exec $tmp "$@"
 # let's be nice and close the </p>
