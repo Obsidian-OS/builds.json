@@ -2,7 +2,7 @@
 set -euo pipefail
 echo -e "\033[0;38;2;0;255;155;49m\r"
 cat<<EOF
-bdj - builds.json auto-downloader
+b.j - builds.json auto-downloader
 Copyright (c) 2025 ObsidianOS
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
@@ -29,7 +29,7 @@ echo -e "\033[0;38;2;222;222;225;49mbuilds.json is:"
 echo "$builds"
 echo "root is:"
 echo "$root/"
-echo "you are using a version of bdj from ${distributerName}"
+echo "you are using a version of b.j from ${distributerName}"
 if [ "$usegpg" = yes ]; then
     if ! gpg --list-keys --with-colons | grep -q "$signer"; then
         read -rp "Download GPG key $signer from $signerKeyserver? [y/N] " ans
