@@ -17,7 +17,7 @@ for cmd in curl gpg jq; do
 done
 if ! command -v kitten > /dev/null 2>&1; then
   kitten() {
-    return 1
+    return 0
   }
 fi
 # Download builds.json
