@@ -15,11 +15,6 @@ for cmd in curl gpg jq; do
     exit 1
   fi
 done
-if ! command -v kitten > /dev/null 2>&1; then
-  kitten() {
-    return 0
-  }
-fi
 # Download builds.json
 : "${root:=https://files.obsidianos.xyz}"
 : "${builds:=${root}/builds.json}"
@@ -56,7 +51,7 @@ if [ -z "$1" ]; then
     for i in $(seq 0 $((options - 1))); do
         name=$(echo "$builds" | jq -r ".[$i].name")
         desc=$(echo "$builds" | jq -r ".[$i].info")
-        curl -s $(echo "$builds" | jq -r ".[$i].icon_url") | kitten icat --align=left --use-window-size=10,10,50,50
+        curl -s $(echo "$builds" | jq -r ".[$i].icon_url") | kitten icat --align=left --use-window-size=10,10,50,50 || true
         printf "%-3s %-15s %s\n" "$i:" "$name" "$desc"
     done
 
@@ -82,7 +77,7 @@ if [ $choice == a ]; then
     for i in $(seq 0 $((options - 1))); do
         name=$(echo "$builds" | jq -r ".[$i].name")
         desc=$(echo "$builds" | jq -r ".[$i].info")
-        curl -s $(echo "$builds" | jq -r ".[$i].icon_url") | kitten icat --align=left --use-window-size=10,10,50,50
+        curl -s $(echo "$builds" | jq -r ".[$i].icon_url") | kitten icat --align=left --use-window-size=10,10,50,50 || true
         printf "%-3s %-15s %s\n" "$i:" "$name" "$desc"
         $0 $i >/dev/null
     done
